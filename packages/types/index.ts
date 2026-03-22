@@ -8,3 +8,9 @@ export interface Child {
   name: string;
   age: number;
 }
+
+export interface ParentCreateInput{
+  name:string,
+  password:string,
+  email:string
+}

@@ -1,6 +1,22 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect } from "react";
+import { socket } from "../../utils/socket";
 
 export default function Home() {
+  useEffect(() => {
+    socket.emit("join_family", "my-family");
+
+    socket.on("habit_updated", (data) => {
+      console.log("Real-time update:", data);
+      // update UI state here
+    });
+
+    return () => {
+      socket.off("habit_updated");
+    };
+  }, []);
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">

@@ -1,0 +1,23 @@
+{
+  "name": "family-health-app",
+  "private":"true",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "packageManager": "npm@11.6.2", 
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"turbo run dev",
+    "build":"turbo run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "workspaces":["apps/*","packages/*"],
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "turbo": "^2.8.20",
+    "typescript": "^5.9.3"
+  }
+}

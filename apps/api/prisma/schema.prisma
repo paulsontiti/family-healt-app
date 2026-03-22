@@ -15,18 +15,19 @@ datasource db {
 }
 
 
-model User {
+model Parent {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   email    String   @unique
   name     String
-  family    Family  @relation(fields: [familyId], references: [id])
-  familyId     String      @db.ObjectId
+  password     String
+  family    Family?  @relation(fields: [familyId], references: [id])
+  familyId     String?      @db.ObjectId
 }
 
 model Family {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
   name       String
-  users       User[]       
+  parents       Parent[]       
   children   Child[]
   challenges Challenge[]
 }

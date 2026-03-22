@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  email    String   @unique
+  name     String
+  family    Family  @relation(fields: [familyId], references: [id])
+  familyId     String      @db.ObjectId
+}
+
+model Family {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  users       User[]       
+  children   Child[]
+  challenges Challenge[]
+}
+
+model Child {
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  age      Int
+  height   Float
+  weight   Float
+  family   Family     @relation(fields: [familyId], references: [id])
+  familyId String     @db.ObjectId
+  habits   HabitLog[]
+}
+
+model HabitLog {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  child    Child    @relation(fields: [childId], references: [id])
+  childId  String   @db.ObjectId
+  date     DateTime @default(now())
+  water    Int      @default(0)
+  fruits   Int      @default(0)
+  veggies  Int      @default(0)
+  activity Int      @default(0) // minutes
+  screen   Int      @default(0) // minutes
+}
+
+model Challenge {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  startDate   DateTime
+  endDate     DateTime
+  family      Family   @relation(fields: [familyId], references: [id])
+  familyId    String   @db.ObjectId
+}
+
+model Tip {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  content String
+}

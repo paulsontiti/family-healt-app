@@ -11,7 +11,7 @@ export default function HomePage() {
   const goLogin = () => router.push("/login");
   const goSignup = () => router.push("/register");
 
-  useEffect(() => {
+  useEffect(() => { 
     const t = localStorage.getItem("token");
     setToken(t);
   }, []);

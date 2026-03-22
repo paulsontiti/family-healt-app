@@ -1,81 +1,140 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import Image from "next/image";
-import { useEffect } from "react";
-import { socket } from "../../utils/socket";
+export default function HomePage() {
+  const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
+  const goLogin = () => router.push("/login");
+  const goSignup = () => router.push("/register");
 
-export default function Home() {
   useEffect(() => {
-    socket.emit("join_family", "my-family");
-
-    socket.on("habit_updated", (data) => {
-      console.log("Real-time update:", data);
-      // update UI state here
-    });
-
-    return () => {
-      socket.off("habit_updated");
-    };
+    const t = localStorage.getItem("token");
+    setToken(t);
   }, []);
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-purple-950 to-pink-50 flex flex-col">
+      {/* Navbar */}
+      <motion.nav
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex justify-between items-center p-6 w-full mx-auto"
+      >
+        <h1 className="text-2xl font-bold">Family Health Tracker</h1>
+        {token ? (
+          <div>
+            {" "}
+            <h1 className="text-2xl font-bold">Welcome Back 👋</h1>
+            <Button
+              className="bg-red-500 hover:bg-red-600"
+              onClick={() => {
+                localStorage.removeItem("token");
+                router.refresh();
+              }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Logout
+            </Button>
+          </div>
+        ) : (
+          <div className="space-x-4">
+            <Button onClick={goLogin} className="bg-blue-600 hover:bg-blue-700">
+              Login
+            </Button>
+            <Button
+              onClick={goSignup}
+              className="bg-green-600 hover:bg-green-700"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Sign Up
+            </Button>
+          </div>
+        )}
+      </motion.nav>
+
+      {/* Hero Section */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center max-w-2xl mx-auto mt-12 mb-12"
+      >
+        <h1 className="text-5xl font-extrabold mb-4">
+          Empower Your Family's Health
+        </h1>
+        <p className="text-lg text-gray-300 mb-6">
+          Track habits, monitor growth, and participate in fun family
+          challenges.
+        </p>
+        <div className="space-x-4">
+          <Button onClick={goSignup} className="bg-blue-600 hover:bg-blue-700">
+            Get Started
+          </Button>
+          <Button onClick={goLogin} className="bg-green-600 hover:bg-green-700">
+            Learn More
+          </Button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </motion.div>
+
+      {/* Features Section */}
+      <div className="grid md:grid-cols-3 gap-6 max-w-6xl w-full mx-auto">
+        {[
+          {
+            title: "Track Habits",
+            description: "Water, activity, screen time, and nutrition.",
+          },
+          {
+            title: "Growth Charts",
+            description: "Monitor height, weight, and BMI over time.",
+          },
+          {
+            title: "Family Challenges",
+            description: "Weekly fun challenges to keep everyone active.",
+          },
+        ].map((feature, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            <Card className="rounded-2xl shadow-lg hover:shadow-xl transition">
+              <CardContent className="p-6 text-center">
+                <CardTitle className="text-xl font-bold mb-2">
+                  {feature.title}
+                </CardTitle>
+                <p className="text-gray-300">{feature.description}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Call to Action Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="my-12 text-center"
+      >
+        <h2 className="text-3xl font-bold mb-4">
+          Start Your Family’s Health Journey Today
+        </h2>
+        <Button
+          onClick={goSignup}
+          className="bg-pink-600 hover:bg-pink-700 text-white"
+        >
+          Sign Up Now
+        </Button>
+      </motion.div>
+
+      {/* Footer */}
+      <footer className="mt-auto py-6 bg-gray-100 text-center text-gray-600">
+        &copy; {new Date().getFullYear()} Family Health Tracker. All rights
+        reserved.
+      </footer>
     </div>
   );
 }

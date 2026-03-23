@@ -1,6 +1,6 @@
 export default function Sidebar() {
   return (
-    <div className="w-64 shadow-md p-4 ">
+    <div className="w-64 shadow-md p-4 text-white h-full">
      
 
       <ul className="space-y-4 h-screen">

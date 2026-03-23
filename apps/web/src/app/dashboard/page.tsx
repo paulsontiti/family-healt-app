@@ -11,9 +11,8 @@ const children = [
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950 p-6">
+    <div className="min-h-screen  p-6">
       {/* Header */}
-      
 
       {/* Stats Cards */}
       <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -27,9 +26,9 @@ export default function Dashboard() {
             >
               <Card className="rounded-2xl shadow-md hover:shadow-xl transition">
                 <CardContent className="p-6">
-                  <h3 className="font-semibold text-gray-300">{item}</h3>
+                  <h3 className="font-semibold text-black">{item}</h3>
                   <p className="text-2xl font-bold mt-2">75%</p>
-                  <Progress value={40} className="mt-4" />
+                  <Progress value={80} className="mt-4" />
                 </CardContent>
               </Card>
             </motion.div>
@@ -38,11 +37,12 @@ export default function Dashboard() {
       </div>
 
       {/* Children Section */}
-      <motion.div 
-       initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 }}
-              className="mb-8">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.1 }}
+        className="mb-8"
+      >
         <h2 className="text-2xl font-bold mb-4">Children</h2>
         <div className="grid md:grid-cols-2 gap-6">
           {children.map((child, index) => (

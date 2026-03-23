@@ -24,7 +24,7 @@ export default function HomePage() {
         transition={{ duration: 0.5 }}
         className="flex justify-between items-center p-6 w-full mx-auto"
       >
-        <h1 className="text-2xl font-bold">Family Health Tracker</h1>
+        <h1 className="text-2xl text-white font-bold">Family Health Tracker</h1>
         {token ? (
           <div>
             {" "}
@@ -61,7 +61,7 @@ export default function HomePage() {
         transition={{ duration: 0.6 }}
         className="text-center max-w-2xl mx-auto mt-12 mb-12"
       >
-        <h1 className="text-5xl font-extrabold mb-4">
+        <h1 className="text-5xl font-extrabold mb-4 text-white">
           Empower Your Family's Health
         </h1>
         <p className="text-lg text-gray-300 mb-6">
@@ -100,7 +100,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
           >
-            <Card className="rounded-2xl shadow-lg hover:shadow-xl transition">
+            <Card className="rounded-2xl shadow-lg hover:shadow-xl transition bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950 text-white">
               <CardContent className="p-6 text-center">
                 <CardTitle className="text-xl font-bold mb-2">
                   {feature.title}
@@ -119,7 +119,7 @@ export default function HomePage() {
         transition={{ delay: 0.4 }}
         className="my-12 text-center"
       >
-        <h2 className="text-3xl font-bold mb-4">
+        <h2 className="text-3xl font-bold mb-4 text-white">
           Start Your Family’s Health Journey Today
         </h2>
         <Button

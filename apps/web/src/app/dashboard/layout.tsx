@@ -13,11 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-full">
       <Sidebar />
       <div className="flex-1">
         <Header />
-        <main className="p-6 h-full bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950 overflow-y-auto">
+        <main className="p-6 h-full  overflow-y-auto">
           {children}
         </main>
       </div>

@@ -41,6 +41,7 @@ model Child {
   family   Family     @relation(fields: [familyId], references: [id])
   familyId String     @db.ObjectId
   habits   HabitLog[]
+  growthLogs   GrowthLog[]
 }
 
 model HabitLog {
@@ -69,4 +70,12 @@ model Tip {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   title   String
   content String
+}
+model GrowthLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  child     Child    @relation(fields: [childId], references: [id])
+  childId   String
+  weight    Float
+  height    Float
+  date      DateTime @default(now())
 }

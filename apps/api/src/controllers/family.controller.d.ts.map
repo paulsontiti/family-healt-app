@@ -1,0 +1,1 @@
+{"version":3,"file":"family.controller.d.ts","sourceRoot":"","sources":["family.controller.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAEjD,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,+BAA+B,CAAC;AAEjE,wBAAsB,qBAAqB,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ,iBAQtE;AAED,wBAAsB,sBAAsB,CAAC,GAAG,EAAE,WAAW,EAAE,GAAG,EAAE,QAAQ,iBAU3E"}

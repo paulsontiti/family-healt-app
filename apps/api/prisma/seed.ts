@@ -51,8 +51,7 @@ async function main() {
     data: {
       title: "No Sugary Drinks Week",
       description: "Avoid all sugary drinks for 7 days",
-      startDate: new Date(),
-      endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      target:7,
       familyId: family.id,
     },
   });

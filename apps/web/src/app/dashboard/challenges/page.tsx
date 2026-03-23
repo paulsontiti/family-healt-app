@@ -20,7 +20,7 @@ export default function ChallengesPage() {
   }, []);
 
   return (
-    <div className="grid md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
       {challenges.map((c: any) => (
         <ChallengeCard key={c.id} challenge={c} />
       ))}

@@ -60,12 +60,22 @@ model Challenge {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  startDate   DateTime
-  endDate     DateTime
+ target      Int
+  progress    ChallengeProgress?
   family      Family   @relation(fields: [familyId], references: [id])
   familyId    String   @db.ObjectId
 }
+model ChallengeProgress {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId String   @unique
+  familyId    String
 
+  progress    Int      @default(0)
+  streak      Int      @default(0)
+  lastUpdated DateTime?
+  completed   Boolean  @default(false)
+}
 model Tip {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   title   String

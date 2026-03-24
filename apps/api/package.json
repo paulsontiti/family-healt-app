@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server",
     "start": "tsx src/server",
-    "postinstall": "prisma generate",
+    "postinstall": "if [ -n \"$DATABASE_URL\" ]; then prisma generate; fi",
     "build": "tsc"
   },
   "keywords": [],

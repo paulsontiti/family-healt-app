@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const authApi = axios.create({
-  baseURL: "http://localhost:5000/api/auth",
+  baseURL: `${process.env.NEXT_API_URL}/auth`,
 });
 
 export default authApi;

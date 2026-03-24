@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const authApi = axios.create({
-  baseURL: `${process.env.NEXT_API_URL}/auth`,
+  baseURL: `https://family-health-app-yxcu.onrender.com/api/auth`,
 });
 
 export default authApi;

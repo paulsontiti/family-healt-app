@@ -21,6 +21,7 @@ export default function HabitCard({ label, icon, value, onClick }: Props) {
           <div className="text-3xl mb-2">{icon}</div>
           <h3 className="font-semibold">{label}</h3>
           <p className="text-2xl font-bold mt-2">{value}</p>
+        
         </CardContent>
       </Card>
     </motion.div>

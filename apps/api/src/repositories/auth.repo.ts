@@ -7,6 +7,9 @@ export async function createParentRepo(data: ParentCreateInput) {
   });
 }
 
-export async function getParentRepo(email: string) {
+export async function getParentRepo(id: string) {
+  return await prisma.parent.findUnique({ where: { id } });
+}
+export async function getParentEmailRepo(email: string) {
   return await prisma.parent.findUnique({ where: { email } });
 }

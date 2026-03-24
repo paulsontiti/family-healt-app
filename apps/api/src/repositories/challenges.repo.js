@@ -4,7 +4,7 @@ export async function getChallengesRepo() {
         return await prisma.challenge.findMany({ include: { family: true } });
     }
     catch (err) {
-        return null;
+        throw new Error(err.message);
     }
 }
 //# sourceMappingURL=challenges.repo.js.map

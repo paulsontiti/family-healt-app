@@ -14,78 +14,94 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Parent {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  email    String   @unique
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String  @unique
   name     String
-  password     String
-  family    Family?  @relation(fields: [familyId], references: [id])
-  familyId     String?      @db.ObjectId
+  password String
+  family   Family? @relation(fields: [familyId], references: [id])
+  familyId String? @db.ObjectId
 }
 
 model Family {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
   name       String
-  parents       Parent[]       
+  parents    Parent[]
   children   Child[]
   challenges Challenge[]
 }
 
 model Child {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  age      Int
-  height   Float
-  weight   Float
-  family   Family     @relation(fields: [familyId], references: [id])
-  familyId String     @db.ObjectId
-  habits   HabitLog[]
-  growthLogs   GrowthLog[]
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  age        Int
+  height     Float
+  weight     Float
+  gender     String
+  family     Family      @relation(fields: [familyId], references: [id])
+  familyId   String      @db.ObjectId
+  habits     HabitLog[]
+  growthLogs GrowthLog[]
+
+  @@index([familyId])
 }
 
 model HabitLog {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   child    Child    @relation(fields: [childId], references: [id])
   childId  String   @db.ObjectId
-  date     DateTime @default(now())
   water    Int      @default(0)
   fruits   Int      @default(0)
   veggies  Int      @default(0)
   activity Int      @default(0) // minutes
   screen   Int      @default(0) // minutes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Challenge {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String             @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
- target      Int
+  target      Int
+  habitType   HabitType
   progress    ChallengeProgress?
-  family      Family   @relation(fields: [familyId], references: [id])
-  familyId    String   @db.ObjectId
+  family      Family             @relation(fields: [familyId], references: [id])
+  familyId    String             @db.ObjectId
 }
+
 model ChallengeProgress {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   challenge   Challenge @relation(fields: [challengeId], references: [id])
-  challengeId String   @unique
+  challengeId String    @unique
   familyId    String
 
-  progress    Int      @default(0)
-  streak      Int      @default(0)
+  progress    Int       @default(0)
+  streak      Int       @default(0)
   lastUpdated DateTime?
-  completed   Boolean  @default(false)
+  completed   Boolean   @default(false)
 }
+
 model Tip {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   title   String
   content String
 }
+
 model GrowthLog {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  child     Child    @relation(fields: [childId], references: [id])
-  childId   String
-  weight    Float
-  height    Float
-  date      DateTime @default(now())
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  child   Child    @relation(fields: [childId], references: [id])
+  childId String
+  weight  Float
+  height  Float
+  date    DateTime @default(now())
+}
+
+enum HabitType {
+  Water
+  Fruit 
+  Veggies 
+  Activity 
+  Screen
 }

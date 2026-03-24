@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import Sidebar from "./components/Sidebar";
+
 import Header from "./components/Header";
+import ProtectedRoute from "./components/ProtectedRoute";
+import SidebarDesktop from "./components/SidebarDesktop";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,12 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <div className="flex min-h-full">
-      <Sidebar />
-      <div className="flex-1">
+      <ProtectedRoute />
+      <SidebarDesktop />
+      <div className="flex-11">
         <Header />
-        <main className="p-6 h-full  overflow-y-auto">
-          {children}
-        </main>
+        <main className="p-6 h-full  overflow-y-auto">{children}</main>
       </div>
     </div>
   );

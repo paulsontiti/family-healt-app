@@ -1,4 +1,5 @@
 "use client";
+import Greetings from "@/components/Greetings";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -24,21 +25,9 @@ export default function HomePage() {
         transition={{ duration: 0.5 }}
         className="flex justify-between items-center p-6 w-full mx-auto"
       >
-        <h1 className="text-2xl text-white font-bold">Family Health Tracker</h1>
-        {token ? (
-          <div>
-            {" "}
-            <h1 className="text-2xl font-bold">Welcome Back 👋</h1>
-            <Button
-              className="bg-red-500 hover:bg-red-600"
-              onClick={() => {
-                localStorage.removeItem("token");
-                router.refresh();
-              }}
-            >
-              Logout
-            </Button>
-          </div>
+        <h1 className="md:text-2xl text-white font-bold">Family Health Tracker</h1>
+        {token === " " ? (
+         <Greetings/>
         ) : (
           <div className="space-x-4">
             <Button onClick={goLogin} className="bg-blue-600 hover:bg-blue-700">

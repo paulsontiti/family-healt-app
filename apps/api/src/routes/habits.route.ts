@@ -3,7 +3,6 @@ import prisma from "../../prisma/client";
 import { authMiddleware } from "../middleware/auth.middleware";
 
 const habitsRouter = Router();
-
 // GET /habits - all habit logs
 habitsRouter.get("/", authMiddleware, async (_req, res) => {
   const habits = await prisma.habitLog.findMany({ include: { child: true } });
@@ -28,12 +27,13 @@ habitsRouter.post("/", authMiddleware, async (req, res) => {
 });
 
 habitsRouter.get("/today", async (req, res) => {
+ 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   const habit = await prisma.habitLog.findFirst({
     where: {
-      date: { gte: today },
+      createdAt: { gte: today },
     },
   });
 

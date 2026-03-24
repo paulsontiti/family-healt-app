@@ -4,6 +4,6 @@ export async function getChallengesRepo() {
   try {
     return await prisma.challenge.findMany({ include: { family: true } });
   } catch (err: any) {
-    return null;
+   throw new Error(err.message)
   }
 }

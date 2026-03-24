@@ -26,7 +26,7 @@ habitsRouter.get("/today", async (req, res) => {
     today.setHours(0, 0, 0, 0);
     const habit = await prisma.habitLog.findFirst({
         where: {
-            date: { gte: today },
+            createdAt: { gte: today },
         },
     });
     res.json(habit || {

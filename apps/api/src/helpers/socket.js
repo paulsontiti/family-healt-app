@@ -1,12 +1,10 @@
 import { Server } from "socket.io";
-import app from "../app";
 export default function initSocket(server) {
     const io = new Server(server, {
         cors: {
             origin: "*",
         },
     });
-    app.set("io", io);
     io.on("connection", (socket) => {
         console.log("User connected:", socket.id);
         // Join family room
@@ -24,5 +22,6 @@ export default function initSocket(server) {
             console.log("User disconnected:", socket.id);
         });
     });
+    return io;
 }
 //# sourceMappingURL=socket.js.map

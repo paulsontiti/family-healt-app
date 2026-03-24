@@ -9,5 +9,6 @@ export declare function getChallenges(): Promise<({
     title: string;
     description: string;
     target: number;
-})[] | null>;
+    habitType: import("@prisma/client").$Enums.HabitType;
+})[]>;
 //# sourceMappingURL=challenges.service.d.ts.map

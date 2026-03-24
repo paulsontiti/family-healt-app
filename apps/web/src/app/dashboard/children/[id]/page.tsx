@@ -5,45 +5,54 @@ import { useParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import GrowthChart from "../../components/charts/GrowthChart";
 import { socket } from "../../../../../utils/socket";
+import { toast } from "sonner";
+import api from "@/lib/api";
+import HabitLogs from "../../components/habits/HabitLog";
+import HabitChart from "../../habits/HabitChart";
 
 export default function ChildProfile() {
   const { id } = useParams();
   const [child, setChild] = useState<any>(null);
   const [logs, setLogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchChild = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get(`/children/${id}`);
+
+      setChild(res.data);
+      setLogs(res.data.growthLogs);
+    } catch (err: any) {
+      console.log(err);
+      toast.error(err.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    fetch(`http://localhost:5000/api/children/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((data) => setChild(data));
-
-    fetch(`http://localhost:5000/api/children/${id}/growth`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((data) => setLogs(data));
+    fetchChild();
   }, [id]);
 
+  // useEffect(() => {
+  //   if (!socket || !child) return;
+  //   socket.emit("join_family", child.familyId);
 
+  //   socket.on("growth_updated", (newLog) => {
+  //     if (newLog.childId === id) {
+  //       setLogs((prev) => [...prev, newLog]);
+  //     }
+  //   });
 
-useEffect(() => {
-  socket.emit("join_family", child.familyId);
+  //   return () => {
+  //     socket.off("growth_updated");
+  //   };
+  // }, [child, socket]);
 
-  socket.on("growth_updated", (newLog) => {
-    if (newLog.childId === id) {
-      setLogs((prev) => [...prev, newLog]);
-    }
-  });
+  if (loading) return <div className="text-white">Loading...</div>;
 
-  return () => {
-    socket.off("growth_updated");
-  };
-}, [child]);
-
-  if (!child) return <div>Loading...</div>;
+  if (!child) return <p className="text-white">No Info</p>;
 
   const bmi = Number(calculateBMI(child.weight, child.height));
   const category = getBMICategory(bmi);
@@ -51,7 +60,8 @@ useEffect(() => {
   return (
     <div className="space-y-6">
       {/* Child Info */}
-      <Card>
+    <div className="grid grid-cols-2 gap-6">
+        <Card>
         <CardContent className="p-6">
           <h2 className="text-2xl font-bold">{child.name}</h2>
           <p>Age: {child.age}</p>
@@ -68,9 +78,18 @@ useEffect(() => {
           <p className={`font-semibold ${category.color}`}>{category.label}</p>
         </CardContent>
       </Card>
+    </div>
 
+      {/* Habits */}
+      <HabitLogs idChild={child.id} familyId={child.familyId} />
+
+      <HabitChart id={child.id} />
       {/* Chart */}
-      <GrowthChart data={logs} />
+      {logs.length === 0 ? (
+        <p className="text-white">No Growth logs</p>
+      ) : (
+        <GrowthChart data={logs} />
+      )}
     </div>
   );
 }

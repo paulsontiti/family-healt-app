@@ -1,5 +1,4 @@
 import { Server } from "socket.io";
-import app from "../app";
 
 export default function initSocket(server: any) {
   const io = new Server(server, {
@@ -7,7 +6,7 @@ export default function initSocket(server: any) {
       origin: "*",
     },
   });
-  app.set("io", io);
+  
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
@@ -29,4 +28,6 @@ export default function initSocket(server: any) {
       console.log("User disconnected:", socket.id);
     });
   });
+
+  return io;
 }

@@ -16,7 +16,7 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/children", childrenRouter);
-app.use("/api//habits", habitsRouter);
+app.use("/api/habits",habitsRouter)
 app.use("/api/challenges", challengesRouter);
 app.use("/api/tips", tipsRouter);
 app.use("/api/families", familyRouter);

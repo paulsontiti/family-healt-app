@@ -21,7 +21,7 @@ export default function FamilyAccessForm() {
   const [searching, setSearching] = useState(false);
   const [error, setError] = useState("");
 
-  const setParent = useAuthStore(state => state.setParent)
+  const setParent = useAuthStore((state) => state.setParent);
 
   // CREATE FAMILY
   const handleCreate = async () => {
@@ -36,8 +36,7 @@ export default function FamilyAccessForm() {
 
       const res = await api.post("/families", { familyName });
 
-      localStorage.setItem("parent", JSON.stringify(res.data));
-
+      setParent(res.data);
       toast.success("Family created successfully 🎉");
       window.location.reload();
     } catch (err: any) {
@@ -72,7 +71,7 @@ export default function FamilyAccessForm() {
 
       const res = await api.post(`/families/${familyId}/join`);
 
-     setParent(res.data)
+      setParent(res.data);
 
       toast.success("Joined family successfully 🎉");
       window.location.reload();

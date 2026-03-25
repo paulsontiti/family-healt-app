@@ -43,7 +43,7 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       const res = await authApi.post("/register", data);
-      setParent(res.data.token);
+      setParent(res.data.parent);
       setToken(res.data.token);
 
       toast.success("Login was successful");

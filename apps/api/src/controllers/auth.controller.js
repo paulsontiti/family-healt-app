@@ -1,21 +1,29 @@
 import jwt from "jsonwebtoken";
 import prisma from "../../prisma/client";
 import { hashPassword, comparePasswords } from "../utils/bcrypt.utils";
-import { createParent, getParent, getParentEmail } from "../services/auth.service";
+import { createParent, getParent, getParentEmail, } from "../services/auth.service";
 export const authController = {
     register: async (req, res) => {
         try {
             const { name, email, password } = req.body;
             const hashedPassword = await hashPassword(password);
-            const user = await createParent({
+            const parent = await createParent({
                 name,
                 email,
                 password: hashedPassword,
             });
-            const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+            const token = jwt.sign({ parentId: parent.id }, process.env.JWT_SECRET, {
                 expiresIn: "7d",
             });
-            res.status(201).json({ user: { id: user.id, email: user.email }, token });
+            res.status(201).json({
+                parent: {
+                    id: parent.id,
+                    email: parent.email,
+                    familyId: parent.familyId,
+                    name: parent.name,
+                },
+                token,
+            });
         }
         catch (err) {
             res.status(500).json({ message: err.message });
